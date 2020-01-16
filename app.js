@@ -2,11 +2,11 @@
 
 // prompt for team members - engineer / inern
 // name, email, id, manager: officeNumber engineer: github username, intern: school
-const { askAbout, managerQuest, memberQuest, memberCheck } = require("./lib/inquiry");
+const { askAbout, managerQuest, memberQuest, checkMemberToAdd } = require("./lib/inquiry");
 
-const { Manager } = require("./lib/Manager");
-const { Engineer } = require("./lib/Engineer");
-const { Inter } = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 
 const team = {
   manager: [],
@@ -15,31 +15,39 @@ const team = {
   hasMemberToAdd: false
 };
 
-// team.manager = askAbout(manager);
-// console.log(team.manager);
 async function init() {
-  await addMemberToDB("manager", managerQuest);
-  //   await addMemberToDB("hasMemberToAdd", memberCheck);
+  //! 1. Ask about manager & add it to the team
+  await addMemberToTeam("manager", managerQuest);
 
-  if (team.hasMemberToAdd) {
+  //! 2. Ask about members & add it to the team
+  while (team.hasMemberToAdd) {
+    await addMemberToTeam("member", memberQuest);
   }
 }
 
-const addMemberToDB = async (member, memberQuest) => {
-  // Get answers
-  const data = await askAbout(memberQuest);
+const addMemberToTeam = async (type, memberQuest) => {
+  //! 1. Get answers
+  const answers = await askAbout(memberQuest);
 
-  // Create class obj
-  if (member === "manager") {
-    const employeeObj = new Manager(data.name, data.id, data.email, data.officeNumber);
-  } else if (member === "engineer") {
-    const employeeObj = new Engineer(data.name, data.id, data.email, data.gitHubUsername);
-  } else {
-    const employeeObj = new Intern(data.name, data.id, data.email, data.school);
+  let title = type === "member" ? answers.memberTitle : "manager";
+  let employee;
+
+  //! 2. Create obj from proper class
+  if (title === "manager") {
+    employee = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+  } else if (title === "engineer") {
+    employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
+  } else if (title === "intern") {
+    employee = new Intern(answers.name, answers.id, answers.email, answers.school);
   }
 
-  // Add it to DB
-  team[member].push(employeeObj);
+  //! 3. Add it to the team
+  team[title].push(employee);
+  console.log(team);
+
+  //! 4. Ask if there is more member to add
+  const answer = await askAbout(checkMemberToAdd);
+  team.hasMemberToAdd = answer.hasMemberToAdd;
 };
 
 init();
