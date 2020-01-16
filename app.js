@@ -2,6 +2,9 @@
 
 // prompt for team members - engineer / inern
 // name, email, id, manager: officeNumber engineer: github username, intern: school
+const fs = require("fs");
+const { promisify } = require("util");
+
 const { askAbout, managerQuest, memberQuest, checkMemberToAdd } = require("./lib/inquiry");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
@@ -20,9 +23,26 @@ async function init() {
   await addMemberToTeam("manager", managerQuest);
 
   //! 2. Ask about members & add it to the team
-  while (team.hasMemberToAdd) {
-    await addMemberToTeam("member", memberQuest);
+  //   while (team.hasMemberToAdd) {
+  //     await addMemberToTeam("member", memberQuest);
+  //   }
+
+  //! 3. Render
+  const readFile = promisify(fs.readFile);
+  const appendFile = promisify(fs.appendFile);
+
+  const mainHtml = await readFile("./templates/index.html", "utf-8");
+  let managerHtml = await readFile("./templates/manager.html", "utf-8");
+
+  const target = ["{%NAME%}", "{%ID%}", "{%EMAIL%}", "{%OFFICENUM%}"];
+
+  for (el of target) {
+    const property = el.split("%")[1].toLowerCase();
+
+    managerHtml = managerHtml.replace(el, team.manager[0][property]);
   }
+
+  console.log(managerHtml);
 }
 
 //* Member adding func
@@ -51,4 +71,9 @@ const addMemberToTeam = async (type, memberQuest) => {
   team.hasMemberToAdd = answer.hasMemberToAdd;
 };
 
+const render = () => {};
+
 init();
+
+// path setting
+// error handling
