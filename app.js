@@ -3,7 +3,6 @@
 // prompt for team members - engineer / inern
 // name, email, id, manager: officeNumber engineer: github username, intern: school
 const { askAbout, managerQuest, memberQuest, checkMemberToAdd } = require("./lib/inquiry");
-
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -15,6 +14,7 @@ const team = {
   hasMemberToAdd: false
 };
 
+//* Init func
 async function init() {
   //! 1. Ask about manager & add it to the team
   await addMemberToTeam("manager", managerQuest);
@@ -25,6 +25,7 @@ async function init() {
   }
 }
 
+//* Member adding func
 const addMemberToTeam = async (type, memberQuest) => {
   //! 1. Get answers
   const answers = await askAbout(memberQuest);
