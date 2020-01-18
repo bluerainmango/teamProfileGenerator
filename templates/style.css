@@ -5,6 +5,12 @@
   margin: 0;
   box-sizing: inherit;
 }
+a,
+a:link,
+a:visited {
+  color: rgb(236, 195, 255);
+  text-decoration: none;
+}
 html {
   box-sizing: border-box;
   font-size: 62.5%;

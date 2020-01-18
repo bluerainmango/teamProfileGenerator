@@ -76,7 +76,7 @@ const addMemberToTeam = async (type, memberQuest) => {
 
 //! FUNCTION: Creating HTML
 const createHTML = async () => {
-  let mainHTML = await readFile(path.join(__dirname, "templates", "index.html"), "utf-8");
+  let mainHTML = await readFile(path.join(__dirname, "templates", "main.html"), "utf-8");
   let cards = "";
 
   //* 1. Get all employees input data into array for loop
@@ -115,7 +115,8 @@ const generateCard = async (role, employeeData) => {
 
   //* 2. Replace the placeholders with actual data
   for (let prop in employeeData) {
-    cardTemp = cardTemp.replace(`{%${prop.toUpperCase()}%}`, employeeData[prop]);
+    const reg = new RegExp(`{%${prop}%}`, "gi");
+    cardTemp = cardTemp.replace(reg, employeeData[prop]);
   }
 
   return cardTemp;
