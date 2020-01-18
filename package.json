@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/bluerainmango/teamProfileGenerator#readme",
   "dependencies": {
-    "inquirer": "^7.0.3"
+    "inquirer": "^7.0.3",
+    "open": "^7.0.0"
   },
   "devDependencies": {
     "jest": "^24.9.0"

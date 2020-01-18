@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { promisify } = require("util");
 const path = require("path");
+const open = require("open");
 
 // Inquiry, Questions, Classes for employee
 const { askAbout, managerQuest, memberQuest, checkMemberToAdd } = require("./lib/inquiry");
@@ -39,6 +40,9 @@ async function init() {
 
   //* 5. Save the completed HTML to 'output' folder
   await writeFile(path.join(__dirname, "output", "team.html"), html, "utf8");
+
+  //* 6. Open the HTML file
+  await open(path.join(__dirname, "output", "team.html"));
 }
 
 //! FUNCTION : Adding a member to the team
@@ -117,7 +121,13 @@ const generateCard = async (role, employeeData) => {
   return cardTemp;
 };
 
-init();
+//! General error message
+process.on("unhandledRejection", err => {
+  console.log(
+    `🚨 ERROR! : Something went wrong. Please restart the app and try again. Or you may report the issue.`
+  );
+  console.log(`Detail : ${err.name} | ${err.message}`);
+  process.exit(1);
+});
 
-// path setting
-// error handling
+init();
