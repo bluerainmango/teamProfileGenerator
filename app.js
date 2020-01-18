@@ -24,7 +24,6 @@ const team = {
 async function init() {
   //* 1. Ask about manager & add it to the team
   await addMemberToTeam("manager", managerQuest);
-  console.log(team);
 
   //* 2. Ask about members & add it to the team
   while (team.hasMemberToAdd) {
@@ -64,6 +63,7 @@ const addMemberToTeam = async (type, memberQuest) => {
 
   //* 3. Add it to the team data storage
   team[title].push(employee);
+  console.log("🟢 Successfully added : ", employee);
 
   //* 4. Ask if there is more member to add
   const answer = await askAbout(checkMemberToAdd);
