@@ -20,24 +20,25 @@ const team = {
   hasMemberToAdd: false
 };
 
-//* FUNCTION : Initiating the app
+//! FUNCTION : Initiating the app
 async function init() {
-  //! 1. Ask about manager & add it to the team
+  //* 1. Ask about manager & add it to the team
   await addMemberToTeam("manager", managerQuest);
   console.log(team);
-  //! 2. Ask about members & add it to the team
+
+  //* 2. Ask about members & add it to the team
   while (team.hasMemberToAdd) {
     await addMemberToTeam("member", memberQuest);
   }
 
-  //! 3. Create HTML
+  //* 3. Create HTML
   let html = await createHTML();
 
-  //! 4. Add css to HTML
+  //* 4. Add css to HTML
   const style = await readFile(path.join(__dirname, "templates", "style.css"), "utf8");
   html = html.replace("<style></style>", `<style>${style}</style>`);
 
-  //! 4. Save the completed HTML to 'output' folder
+  //* 5. Save the completed HTML to 'output' folder
   await writeFile(path.join(__dirname, "output", "team.html"), html, "utf8");
 }
 
@@ -105,10 +106,10 @@ const createHTML = async () => {
 
 //! FUNCTION: Generating a card
 const generateCard = async (role, employeeData) => {
-  // 1. Get employee's template
+  //* 1. Get employee's template
   let cardTemp = await readFile(path.join(__dirname, "templates", `${role}.html`), "utf-8");
 
-  // 2. Replace the placeholders with actual data
+  //* 2. Replace the placeholders with actual data
   for (let prop in employeeData) {
     cardTemp = cardTemp.replace(`{%${prop.toUpperCase()}%}`, employeeData[prop]);
   }
