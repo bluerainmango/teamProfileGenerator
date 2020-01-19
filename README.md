@@ -4,13 +4,13 @@
 
 ## 🎯 Purpose
 
-As a team member or manager, you can simply create a team profile including all members' basic info so that you can easily access to their emails and GitHub profiles.
+As a team member or manager, you can simply create a team profile including all members basic info, so that you can easily access to their emails and GitHub profiles.
 
 ## ❓How to use
 
 1. Open the app and run it by `node app.js`.
-2. Answer to the prompt questioning about a manager.
-3. If you have more member to add, type `y` or `yes` to the question about additional member.
+2. Answer the prompt question about a manager.
+3. If you have more members to add, type `y` or `yes` to the question about additional members.
 
 ## 🧩 Feature
 
