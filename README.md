@@ -2,6 +2,10 @@
 
 > Quick and easy Node CLI generating a software engineering team profile
 
+## 📌 Used skills
+
+Jest(JS testing), Node.js, Express, Object Oriented Programming(OOP)
+
 ## 🎯 Purpose
 
 As a team member or manager, you can simply create a team profile including all members basic info, so that you can easily access to their emails and GitHub profiles.
